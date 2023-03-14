@@ -19,7 +19,6 @@ class ProductProduct(models.Model):
                 if not record.image_landscape:
                     record.image_landscape = record.product_tmpl_id._get_product_template_landscape_image(record)
 
-
     
     @api.depends('image_ratio')
     def _compute_image_portrait(self):
@@ -33,15 +32,25 @@ class ProductProduct(models.Model):
 
 
     def _get_product_variant_landscape_image(self, record):
-        _logger.info("Looping landscape photos for record %s", record.id)
+        # _logger.info("Looping landscape photos for record %s", record.id)
         for product_image in record.product_variant_image_ids:
             if product_image.is_image_landscape:
                 return product_image.image_512
 
     def _get_product_variant_portrait_image(self, record):
-        _logger.info("Looping portrait photos for record %s", record.id)
+        # _logger.info("Looping portrait photos for record %s", record.id)
         for product_image in record.product_variant_image_ids:
             if product_image.is_image_portrait:
                 return product_image.image_512                
             
+    def _get_square_images(self):
+        self.ensure_one()
+        images = self._get_images()
+        filtered = []
+
+        for image in images:
+            if image.is_image_square:
+                filtered.append(image)
+                
+        return filtered
         
