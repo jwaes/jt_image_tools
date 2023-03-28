@@ -20,7 +20,6 @@ class ProductTemplate(models.Model):
                 # _logger.info("Image is not landscape")
                 record.image_landscape = self._get_product_template_landscape_image(record)
 
-    
     @api.depends('image_ratio')
     def _compute_image_portrait(self):
         for record in self:
@@ -28,7 +27,6 @@ class ProductTemplate(models.Model):
                 record.image_portrait = record.image_512
             else :
                 record.image_portrait = self._get_product_template_portrait_image(record)
-
 
     def _get_product_template_landscape_image(self, record):
         # _logger.info("Looping landscape photos for record %s", record.id)
@@ -50,6 +48,7 @@ class ProductTemplate(models.Model):
         filtered = []
 
         for image in images:
+            _logger.info("TMPL ratio is %s", image.image_ratio)
             if image.is_image_square:
                 filtered.append(image)
                 

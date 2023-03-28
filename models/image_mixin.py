@@ -12,8 +12,9 @@ class ImageMixinJT(models.AbstractModel):
     @api.depends('image_128')
     def _compute_image_ratio(self):
         for record in self:
-            if(record.image_128):
-                image = tools.base64_to_image(record.image_128)
+            img = record.image_128
+            if(img):
+                image = tools.base64_to_image(img)
                 width = image.width
                 height = image.height
                 ratio = height / width
