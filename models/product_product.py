@@ -11,11 +11,17 @@ class ProductProduct(models.Model):
     
     def _is_square_image(self):
         self.ensure_one()
-        image = tools.base64_to_image(self.image_variant_128)
-        width = image.width
-        height = image.height
-        ratio = height / width
-        return 1.0 == ratio
+        img = self.image_variant_128
+        if not img:
+            img = self.image_128
+        if img:
+            image = tools.base64_to_image(img)
+            width = image.width
+            height = image.height
+            ratio = height / width
+            return 1.0 == ratio
+        else:
+            return False
 
     @api.depends('image_ratio')
     def _compute_image_landscape(self):
