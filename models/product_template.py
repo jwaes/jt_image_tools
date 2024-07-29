@@ -9,7 +9,7 @@ class ProductTemplate(models.Model):
     image_landscape = fields.Image(compute='_compute_image_landscape')
     image_portrait = fields.Image(compute='_compute_image_portrait')
     
-    @api.depends('image_ratio')
+    @api.depends('image_ratio','product_template_image_ids')
     def _compute_image_landscape(self):
         for record in self:
             # _logger.info("Record is %s", record.name)
@@ -20,7 +20,7 @@ class ProductTemplate(models.Model):
                 # _logger.info("Image is not landscape")
                 record.image_landscape = self._get_product_template_landscape_image(record)
 
-    @api.depends('image_ratio')
+    @api.depends('image_ratio','product_template_image_ids')
     def _compute_image_portrait(self):
         for record in self:
             if record.is_image_portrait:

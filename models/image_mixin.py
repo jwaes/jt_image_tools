@@ -7,7 +7,7 @@ RATIO_LIMIT_PORTRAIT = 1.15
 class ImageMixinJT(models.AbstractModel):
     _inherit = 'image.mixin'
 
-    image_ratio = fields.Float(compute='_compute_image_ratio')
+    image_ratio = fields.Float(compute='_compute_image_ratio', store=True)
     
     @api.depends('image_128')
     def _compute_image_ratio(self):
@@ -22,9 +22,9 @@ class ImageMixinJT(models.AbstractModel):
             else :
                 record.image_ratio = 0
 
-    is_image_square = fields.Boolean(compute='_compute_is_image_square')
-    is_image_landscape = fields.Boolean(compute='_compute_is_image_landscape')
-    is_image_portrait = fields.Boolean(compute='_compute_is_image_portrait')
+    is_image_square = fields.Boolean(compute='_compute_is_image_square', store=True)
+    is_image_landscape = fields.Boolean(compute='_compute_is_image_landscape', store=True)
+    is_image_portrait = fields.Boolean(compute='_compute_is_image_portrait', store=True)
 
     @api.depends('image_ratio')
     def _compute_is_image_square(self):

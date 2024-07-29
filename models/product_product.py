@@ -23,7 +23,7 @@ class ProductProduct(models.Model):
         else:
             return False
 
-    @api.depends('image_ratio')
+    @api.depends('image_ratio', 'product_variant_image_ids')
     def _compute_image_landscape(self):
         for record in self:
             if record.is_image_landscape:
@@ -33,7 +33,7 @@ class ProductProduct(models.Model):
                 if not record.image_landscape:
                     record.image_landscape = record.product_tmpl_id._get_product_template_landscape_image(record)
     
-    @api.depends('image_ratio')
+    @api.depends('image_ratio', 'product_variant_image_ids')
     def _compute_image_portrait(self):
         for record in self:
             if record.is_image_portrait:
