@@ -31,25 +31,37 @@ class ProductTemplate(models.Model):
     def _get_product_template_landscape_image(self, record):
         # _logger.info("Looping landscape photos for record %s", record.id)
         # _logger.info("number of images: %s", len(record.product_template_image_ids))
-        for product_image in record.product_template_image_ids :
-            # _logger.info("product image %s : %s", product_image.id, product_image.name)
-            if product_image.is_image_landscape:
-                return product_image.image_512
+        landscapes = record.product_template_image_ids.filtered(lambda i: i.is_image_landscape)
+        if landscapes:
+            return landscapes[0].image_512
+        else:
+            return None
+
+        # for product_image in record.product_template_image_ids :
+        #     # _logger.info("product image %s : %s", product_image.id, product_image.name)
+        #     if product_image.is_image_landscape:
+        #         return product_image.image_512
 
     def _get_product_template_portrait_image(self, record):
         # _logger.info("Looping portrait photos for record %s", record.id)
-        for product_image in record.product_template_image_ids :
-            if product_image.is_image_portrait:
-                return product_image.image_512              
+        portraits = record.product_template_image_ids.filtered(lambda i: i.is_image_portrait)
+        if portraits:
+            return portraits[0].image_512
+        else:
+            return None        
+        # for product_image in record.product_template_image_ids :
+        #     if product_image.is_image_portrait:
+        #         return product_image.image_512              
 
     def _get_square_images(self):
         self.ensure_one()
-        images = self._get_images()
-        filtered = []
+        # images = self._get_images()
+        # filtered = []
 
-        for image in images:
-            _logger.info("TMPL ratio is %s", image.image_ratio)
-            if image.is_image_square:
-                filtered.append(image)
+        # for image in images:
+        #     _logger.info("TMPL ratio is %s", image.image_ratio)
+        #     if image.is_image_square:
+        #         filtered.append(image)
                 
-        return filtered                     
+        # return filtered
+        return self._get_images().filtered(lambda i: i.is_image_square)                    
