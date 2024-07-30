@@ -55,13 +55,14 @@ class ProductTemplate(models.Model):
 
     def _get_square_images(self):
         self.ensure_one()
-        # images = self._get_images()
-        # filtered = []
+        
+        images = self._get_images()
+        filtered = []
 
-        # for image in images:
-        #     _logger.info("TMPL ratio is %s", image.image_ratio)
-        #     if image.is_image_square:
-        #         filtered.append(image)
+        for image in images:
+            _logger.info("TMPL ratio is %s", image.image_ratio)
+            if image.is_image_square:
+                filtered.append(image)
                 
-        # return filtered
-        return self._get_images().filtered(lambda i: i.is_image_square)                    
+        return filtered
+                 
