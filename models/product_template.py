@@ -60,7 +60,6 @@ class ProductTemplate(models.Model):
         filtered = []
 
         for image in images:
-            _logger.info("TMPL ratio is %s", image.image_ratio)
             if image.is_image_square:
                 filtered.append(image)
                 

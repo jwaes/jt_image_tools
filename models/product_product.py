@@ -79,18 +79,14 @@ class ProductProduct(models.Model):
     #             record.image_ratio = 0
           
 
-    def _get_square_images(self):
-        self.ensure_one()
-        images = self._get_images()
-        filtered = []
+    # def _get_square_images(self):
+    #     self.ensure_one()
+    #     images = self._get_images()
+    #     filtered = []
 
-        for image in images:
-            if 'product.product' == image._name:
-                if image._is_square_image():
-                    filtered.append(image)
-            else:   
-                if image.is_image_square:
-                    filtered.append(image)
+    #     for image in images:
+    #         if image.is_image_square:
+    #             filtered.append(image)
                 
-        return filtered
+    #     return filtered
         
