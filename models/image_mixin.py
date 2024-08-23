@@ -14,11 +14,14 @@ class ImageMixinJT(models.AbstractModel):
         for record in self:
             img = record.image_128
             if(img):
-                image = tools.base64_to_image(img)
-                width = image.width
-                height = image.height
-                ratio = height / width
-                record.image_ratio = ratio
+                try :
+                    image = tools.base64_to_image(img)
+                    width = image.width
+                    height = image.height
+                    ratio = height / width
+                    record.image_ratio = ratio
+                except Exception:
+                    record.image_ratio = 0
             else :
                 record.image_ratio = 0
 
