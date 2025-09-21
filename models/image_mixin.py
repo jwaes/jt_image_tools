@@ -12,7 +12,7 @@ _logger = logging.getLogger(__name__)
 class ImageMixinJT(models.AbstractModel):
     _inherit = 'image.mixin'
 
-    image_ratio = fields.Float(compute='_compute_image_ratio', store=True)
+    image_ratio = fields.Float(compute='_compute_image_ratio', store=True, groups='base.group_user')
     
     def _get_webp_dimensions_from_header(self, img_data):
         """Extract dimensions from WebP header without decoding the image"""
@@ -63,9 +63,9 @@ class ImageMixinJT(models.AbstractModel):
             else:
                 record.image_ratio = 0
 
-    is_image_square = fields.Boolean(compute='_compute_is_image_square', store=True)
-    is_image_landscape = fields.Boolean(compute='_compute_is_image_landscape', store=True)
-    is_image_portrait = fields.Boolean(compute='_compute_is_image_portrait', store=True)
+    is_image_square = fields.Boolean(compute='_compute_is_image_square', store=True, groups='base.group_user')
+    is_image_landscape = fields.Boolean(compute='_compute_is_image_landscape', store=True, groups='base.group_user')
+    is_image_portrait = fields.Boolean(compute='_compute_is_image_portrait', store=True, groups='base.group_user')
 
     @api.depends('image_ratio')
     def _compute_is_image_square(self):
